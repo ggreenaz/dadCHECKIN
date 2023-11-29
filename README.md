@@ -1,7 +1,7 @@
 # dadCHECKIN
-Meet dadCHECK-IN v0.24: 
+Meet dadCHECKIN
 
-🌟 Introducing dadCHECK-IN v0.24: The Open Source Project Even Your Dad Can't Mess Up! The Down and Dirty Check-in Project.
+🌟 The Open Source Project Even Your Dad Can't Mess Up! The Down and Dirty Check-in Project.
 
 Ever wished for a check-in system so simple that even your tech-challenged dad could use it without calling you for help? Well, wish no more! Presenting dadCHECK-IN, the ultimate, no-frills check-in/check-out script bundle that's as straightforward as dad's jokes!
 
@@ -22,7 +22,7 @@ Ideal For:
 
 Remember, in the world of overly complicated software, dadCHECK-IN is your oasis of simplicity. It's the tool that proudly proclaims, "So easy, even a dad can use it!" And if you chuckle at that, you're exactly who we made this for!
 
-👨‍💼 Join the dadCHECK-IN revolution – where simplicity meets functionality, and dad jokes are always welcome!
+👨‍💼 Join the dadCHECKIN revolution – where simplicity meets functionality, and dad jokes are always welcome!
 
 
 // Install Directions //
