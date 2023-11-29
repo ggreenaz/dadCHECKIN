@@ -64,7 +64,7 @@ Point your web browser to:
 
     http(s)://localhost/install/install.php
 
-You will be asked to provide your database credentials to your database. This README is assuming you have already set those before you try to run the Install script. If you need help on that, this site is a good staring point, but you do  youQ https://www.hostinger.com/tutorials/mysql/how-create-mysql-user-and-grant-permissions-command-line
+You will be asked to provide your database credentials to your database. This README is assuming you have already set those before you try to run the Install script. If you need help on that, this site is a good starting point, but you do  you! https://www.hostinger.com/tutorials/mysql/how-create-mysql-user-and-grant-permissions-command-line
     
         Start the installation by hitting the Install button. 
 
