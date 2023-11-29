@@ -1,5 +1,4 @@
 # dadCHECKIN
-# dadCheck-in
 Meet dadCHECK-IN v0.24: 
 
 🌟 Introducing dadCHECK-IN v0.24: The Open Source Project Even Your Dad Can't Mess Up! The Down and Dirty Check-in Project.
