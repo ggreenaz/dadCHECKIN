@@ -60,7 +60,7 @@ It's crucial to set these permissions correctly to balance security and function
 
 Let's run the installation script after you have set your ownership and directory permissions accordingly. 
 
-// HOSTED SITES NOTE: I some cases you will may struggle with getting the install script to run on hosted sites. I have included a config.php file for you to edit manually. Keep in mind, if you are hosting OnPrem you most likelly not have an issue with the install script, however you may run into issues on hosted websites. Edit this file manually to ensure you can run the software without having to programagically have it done for you.
+// HOSTED SITES NOTE: I some cases you will may struggle with getting the install script to run on hosted sites. I have included a config.php.example file for you to edit manually. Keep in mind, if you are hosting OnPrem you most likelly not have an issue with the install script, however you may run into issues on hosted websites. Edit this file manually to ensure you can run the software without having to programagically have it done for you.
 
 Also, I want to talk about the paths to ../image and ../css/ directories. You MUST configure those as well based upon web root of your site. I am putting those paths in for many users, but NOT ALL USERS. If the look of the site does not reflect the photos in the Wiki, the /css/styles.css file is not configured well. Check that out.
 
