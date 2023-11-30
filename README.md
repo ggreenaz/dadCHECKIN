@@ -3,7 +3,7 @@ Meet dadCHECKIN
 
 🌟 The Open Source Project Even Your Dad Can't Mess Up! The Down and Dirty Check-in Project.
 
-Ever wished for a check-in system so simple that even your tech-challenged dad could use it without calling you for help? Well, wish no more! Presenting dadCHECK-IN, the ultimate, no-frills check-in/check-out script bundle that's as straightforward as dad's jokes!
+Ever wished for a check-in system so simple that even your tech-challenged dad could use it without calling you for help? Well, wish no more! Presenting dadCHECKIN, the ultimate, no-frills check-in/check-out script bundle that's as straightforward as dad's jokes!
 
 Picture this: You're running an event, or maybe you're in charge of the comings and goings in a school office. You need a system that tracks visitors without the fuss of complex reports or the need to decipher code hieroglyphics. Enter dadCHECK-IN – so easy to set up; even your dad won't need to put on his reading glasses!
 
@@ -20,7 +20,7 @@ Ideal For:
     Schools, offices, events – anywhere that needs a simple visitor log.
     People who appreciate dad-level simplicity (and dad jokes!).
 
-Remember, in the world of overly complicated software, dadCHECK-IN is your oasis of simplicity. It's the tool that proudly proclaims, "So easy, even a dad can use it!" And if you chuckle at that, you're exactly who we made this for!
+Remember, in the world of overly complicated software, dadCHECKIN is your oasis of simplicity. It's the tool that proudly proclaims, "So easy, even a dad can use it!" And if you chuckle at that, you're exactly who we made this for!
 
 👨‍💼 Join the dadCHECKIN revolution – where simplicity meets functionality, and dad jokes are always welcome!
 
