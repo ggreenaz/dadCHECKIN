@@ -1,24 +1,24 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #1a1a1a; /* Darker background */
+    background-color: #121212; /* Very dark grey */
     padding: 20px;
     text-align: center;
-    color: #b3b3b3; /* Lighter text for better readability */
+    color: #e0e0e0; /* Soft white for text */
 }
 
 .button, a {
     display: inline-block;
-    background-color: #3498db; /* Changed to a darker blue */
+    background-color: #333333; /* Dark grey */
     padding: 10px 20px;
     margin: 10px;
     border-radius: 5px;
-    color: white;
+    color: #e0e0e0; /* Soft white for text */
     text-decoration: none;
     transition: background-color 0.3s;
 }
 
 .button:hover, a:hover {
-    background-color: #2980b9; /* Darker shade for hover state */
+    background-color: #444444; /* Slightly lighter grey for hover */
 }
 
 table {
@@ -31,16 +31,17 @@ table {
 
 th, td {
     padding: 10px;
-    border: 1px solid #333; /* Darker border color */
+    border: 1px solid #222222; /* Dark border */
     text-align: left;
+    background-color: #181818; /* Very dark grey for cells */
 }
 
 th {
-    background-color: #262626; /* Darker header background */
+    background-color: #222222; /* Dark grey for header */
 }
 
 td {
-    background-color: #1a1a1a; /* Matching body background */
+    background-color: #121212; /* Very dark grey to match body */
 }
 
 .form-row {
@@ -51,28 +52,28 @@ input[type="submit"], input[type="text"], select {
     padding: 5px 10px;
     margin-right: 10px;
     border-radius: 3px;
-    border: 1px solid #333; /* Darker border color */
-    background-color: #333; /* Darker input background */
-    color: #fff; /* Light text for visibility */
+    border: 1px solid #333333; /* Dark grey border */
+    background-color: #333333; /* Dark grey background */
+    color: #e0e0e0; /* Soft white for text */
 }
 
 input[type="submit"] {
-    background-color: #3498db; /* Match button colors */
+    background-color: #333333; /* Dark grey */
     border: none;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
 input[type="submit"]:hover {
-    background-color: #2980b9; /* Darker shade on hover */
+    background-color: #444444; /* Slightly lighter grey for hover */
 }
 
 .delete-button {
-    background-color: #e74c3c; /* Adjusted to a darker red */
+    background-color: #b71c1c; /* Darker red */
 }
 
 .edit-button {
-    background-color: #8e44ad; /* Changed to a purple for contrast */
+    background-color: #4527a0; /* Deep purple */
     color: white;
     border: none;
     padding: 5px 10px;
@@ -82,5 +83,5 @@ input[type="submit"]:hover {
 }
 
 .edit-button:hover {
-    background-color: #9b59b6; /* Darker shade on hover */
+    background-color: #5e35b1; /* Slightly lighter purple for hover */
 }
