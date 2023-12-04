@@ -1,0 +1,123 @@
+/* Scarlet, Light Olive, and Light Teal Theme */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #B85042; /* Scarlet background */
+    padding: 20px;
+    text-align: center;
+    color: #4a4842; /* Light Olive text color */
+}
+
+    margin: auto;
+    background-color: #A7BEAE; /* Light Teal background */
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid white; /* Add a 1-pixel white border */
+}
+.edit-form table {
+    margin: auto;
+    background-color: #A7BEAE; /* Light Teal background */
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid white; /* Add a 1-pixel white border */
+}
+
+.edit-form td {
+    padding: 5px;
+}
+
+.edit-form input[type="text"], .edit-form input[type="submit"] {
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #ddd;
+}
+
+.edit-form input[type="submit"] {
+    background-color: #B85042; /* Scarlet submit button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.edit-form input[type="submit"]:hover {
+    background-color: #943634; /* Darker Scarlet on hover */
+}
+
+table {
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+    background-color: #A7BEAE; /* Light Teal background for table rows */
+}
+
+th {
+    background-color: #B85042; /* Scarlet background for table headers */
+}
+
+form button {
+    background-color: #B85042; /* Scarlet button */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin: 2px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #943634; /* Darker Scarlet on hover */
+}
+
+.button, a {
+    display: inline-block;
+    background-color: #B85042; /* Scarlet button */
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.button:hover, a:hover {
+    background-color: #943634; /* Darker Scarlet on hover */
+}
+
+/* Red delete button styling */
+.delete-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+    background-color: darkred;
+}
+
+/* Red print button styling */
+.print-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.print-button:hover {
+    background-color: darkred;
+}
+

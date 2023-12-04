@@ -1,0 +1,128 @@
+/* Packers Theme with White Text and Borders */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #203731; /* Dark green background */
+    padding: 20px;
+    text-align: center;
+    color: white; /* White text color */
+}
+
+.edit-form table {
+    margin: auto;
+    background-color: #FFB612; /* Gold background for tables */
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.edit-form td {
+    padding: 5px;
+    color: #FFB612; /* Black text color for table data */
+}
+
+.edit-form input[type="text"],
+.edit-form input[type="submit"] {
+    padding: 5px;
+    border-radius: 3px;
+    border: 2px solid white; /* White border for input fields */
+    color: white; /* White text color */
+}
+
+.edit-form input[type="submit"] {
+    background-color: #203731; /* Dark green submit button */
+    color: #FFB612; /* Gold text on submit button */
+    border: 2px solid white; /* White border for submit button */
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.edit-form input[type="submit"]:hover {
+    background-color: #1a2c21; /* Slightly darker green on hover */
+}
+
+table {
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    padding: 10px;
+    border: 1px solid #FFB612; /* Gold border for table headers */
+    text-align: left;
+    background-color: #203731; /* Dark green background for table headers */
+    color: white; /* White text color for table headers */
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #FFB612; /* Gold border for table cells */
+    text-align: left;
+    background-color: #FFB612; /* Gold background for table rows */
+    color: black; /* Black text color for table data */
+}
+
+form button {
+    background-color: #203731; /* Dark green button */
+    color: #FFB612; /* Gold text on buttons */
+    border: 2px solid white; /* White border for buttons */
+    padding: 5px 10px;
+    margin: 2px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #1a2c21; /* Slightly darker green on hover */
+}
+
+.button, a {
+    display: inline-block;
+    background-color: #203731; /* Dark green button */
+    padding: 10px 20px;
+    margin: 10px;
+    border: 2px solid white; /* White border for buttons */
+    border-radius: 5px;
+    color: #FFB612; /* Gold text on buttons */
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.button:hover, a:hover {
+    background-color: #1a2c21; /* Slightly darker green on hover */
+}
+
+/* Red delete button styling */
+.delete-button {
+    background-color: red;
+    color: white;
+    border: 2px solid white; /* White border for delete button */
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+    background-color: darkred;
+}
+
+.red-button {
+    background-color: red; /* Red background */
+    color: white;         /* White text */
+    border: 2px solid white; /* White border for red button */
+    padding: 10px 20px;   /* Padding around the text */
+    border-radius: 5px;   /* Rounded corners */
+    cursor: pointer;      /* Cursor changes to pointer on hover */
+    /* Add any other styles you need */
+}
+
+/* Style for tables */
+.centered-table {
+    width: 100%; /* Set the table width */
+    table-layout: fixed; /* Fixed table layout for consistent column widths */
+    margin: auto; /* Center align the table */
+}
+

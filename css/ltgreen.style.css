@@ -1,0 +1,129 @@
+/* Pastel Light Green Theme */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #eafaf1; /* Pastel light green background */
+    padding: 20px;
+    text-align: center;
+    color: #2c3e50; /* Dark text color */
+}
+
+.edit-form table {
+    margin: auto;
+    background-color: #f0f8f2; /* Lighter pastel green background */
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.edit-form td {
+    padding: 5px;
+}
+
+.edit-form input[type="text"], .edit-form input[type="submit"] {
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #ddd;
+}
+
+.edit-form input[type="submit"] {
+    background-color: #5ab7a1; /* Elegant green submit button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.edit-form input[type="submit"]:hover {
+    background-color: #4b9f92; /* Darker green on hover */
+}
+
+table {
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+    background-color: #f0f8f2; /* Lighter pastel green background for table rows */
+}
+
+th {
+    background-color: #eafaf1; /* Pastel light green background for table headers */
+}
+
+form button {
+    background-color: #5ab7a1; /* Elegant green button */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin: 2px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #4b9f92; /* Darker green on hover */
+}
+
+.button, a {
+    display: inline-block;
+    background-color: #5ab7a1; /* Elegant green button */
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.button:hover, a:hover {
+    background-color: #4b9f92; /* Darker green on hover */
+}
+
+/* Red delete button styling */
+.delete-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+    background-color: darkred;
+}
+
+.red-button {
+    background-color: red; /* Red background */
+    color: white;         /* White text */
+    border: none;         /* No border */
+    padding: 10px 20px;   /* Padding around the text */
+    border-radius: 5px;   /* Rounded corners */
+    cursor: pointer;      /* Cursor changes to pointer on hover */
+    /* Add any other styles you need */
+}
+
+/* Style for tables */
+.centered-table {
+    width: 100%; /* Set the table width */
+    table-layout: fixed; /* Fixed table layout for consistent column widths */
+    margin: auto; /* Center align the table */
+}
+
+/* Style for table headers */
+.centered-table th {
+    width: 50%; /* Adjust the width as needed */
+}
+
+/* Style for table data cells */
+.centered-table td {
+    width: 50%; /* Adjust the width as needed */
+}
+
