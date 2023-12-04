@@ -1,230 +1,317 @@
 <?php
-session_start();
+// Error reporting and PHP settings
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Include the database configuration file with a relative path
-require_once __DIR__ . '/../config.php';
+// Include the database configuration file
+require_once '../config.php';
 
 // Get the database connection
 $conn = getDBConnection();
 
-$search = $_GET['search'] ?? '';
+// Initialize variables
+$successMessage = '';
+$errorMessage = '';
+$editPersonMode = false;
+$editReasonMode = false;
+$editPersonId = 0;
+$editReasonId = 0;
+$editPersonRow = [];
+$editReasonRow = [];
 
-function fetchRecords($conn, $search) {
-    $searchTerm = '%' . $search . '%';
-    $sql = $search ?
-           "SELECT visitors.*, visit_reasons.reason_description
-            FROM visitors
-            LEFT JOIN visit_reasons ON visitors.visit_reason_id = visit_reasons.reason_id
-            WHERE CONCAT(visitors.first_name, ' ', visitors.last_name) LIKE ?"
-           :
-           "SELECT visitors.*, visit_reasons.reason_description
-            FROM visitors
-            LEFT JOIN visit_reasons ON visitors.visit_reason_id = visit_reasons.reason_id";
+// Handle Delete Reason
+if (isset($_POST['delete_reason'])) {
+    $idToDelete = $_POST['reason_id'];
 
-    $stmt = $conn->prepare($sql);
-    if ($search) {
-        $stmt->bind_param("s", $searchTerm);
+    // Check if there are any visitors associated with this reason
+    $stmtCheckVisitors = $conn->prepare("SELECT COUNT(*) as count FROM visitors WHERE visit_reason_id = ?");
+    $stmtCheckVisitors->bind_param("i", $idToDelete);
+    $stmtCheckVisitors->execute();
+    $result = $stmtCheckVisitors->get_result();
+    $row = $result->fetch_assoc();
+    $count = $row['count'];
+    $stmtCheckVisitors->close();
+
+    if ($count === 0) {
+        // No visitors associated, proceed with deletion
+        $stmtDelete = $conn->prepare("DELETE FROM visit_reasons WHERE reason_id = ?");
+        $stmtDelete->bind_param("i", $idToDelete);
+        if ($stmtDelete->execute()) {
+            $successMessage .= " Reason deleted successfully.";
+        } else {
+            $errorMessage .= " Error deleting reason: " . $stmtDelete->error;
+        }
+        $stmtDelete->close();
+    } else {
+        $errorMessage .= " There are visitors associated with this reason. ";
+        $errorMessage .= "<form method='POST'>";
+        $errorMessage .= "<input type='hidden' name='reason_id' value='$idToDelete'>";
+        $errorMessage .= "<button type='submit' name='delete_reason_anyway'>Delete Anyway</button>";
+        $errorMessage .= "</form>";
     }
+}
+
+// Handle Delete Reason Anyway
+if (isset($_POST['delete_reason_anyway'])) {
+    $idToDelete = $_POST['reason_id'];
+
+    // Proceed with deletion even if visitors are associated
+    $stmtDelete = $conn->prepare("DELETE FROM visit_reasons WHERE reason_id = ?");
+    $stmtDelete->bind_param("i", $idToDelete);
+    if ($stmtDelete->execute()) {
+        $successMessage .= " Reason deleted successfully (even with associated visitors).";
+    } else {
+        $errorMessage .= " Error deleting reason: " . $stmtDelete->error;
+    }
+    $stmtDelete->close();
+}
+
+// Handle Edit Reason
+if (isset($_POST['edit_reason'])) {
+    $editReasonMode = true;
+    $editReasonId = $_POST['reason_id'];
+    $stmt = $conn->prepare("SELECT reason_description FROM visit_reasons WHERE reason_id = ?");
+    $stmt->bind_param("i", $editReasonId);
     $stmt->execute();
     $result = $stmt->get_result();
-    $records = [];
-    while ($row = $result->fetch_assoc()) {
-        $records[] = $row;
+    if ($result->num_rows > 0) {
+        $editReasonRow = $result->fetch_assoc();
     }
     $stmt->close();
-    return $records;
 }
 
-$editRecord = null;
+// Handle Update Reason
+if (isset($_POST['update_reason'])) {
+    $reasonIdToUpdate = $_POST['reason_id'];
+    $updatedDescription = $conn->real_escape_string($_POST['updated_reason_description']);
+    $stmt = $conn->prepare("UPDATE visit_reasons SET reason_description = ? WHERE reason_id = ?");
+    $stmt->bind_param("si", $updatedDescription, $reasonIdToUpdate);
+    if ($stmt->execute()) {
+        $successMessage .= " Reason updated successfully.";
+    } else {
+        $errorMessage .= " Error updating reason: " . $stmt->error;
+    }
+    $stmt->close();
+    $editReasonMode = false;
+}
 
-// Handle Update/Delete/Check-in/Check-out requests
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = $_POST['id'] ?? null;
+// Handle Delete Person
+if (isset($_POST['delete_person'])) {
+    $idToDelete = $_POST['person_id'];
+    $stmt = $conn->prepare("DELETE FROM visiting_persons WHERE person_id = ?");
+    $stmt->bind_param("i", $idToDelete);
+    if ($stmt->execute()) {
+        $successMessage .= " Person deleted successfully.";
+    } else {
+        $errorMessage .= " Error deleting person: " . $stmt->error;
+    }
+    $stmt->close();
+}
 
-    if ($id && isset($_POST['delete'])) {
-        $stmt = $conn->prepare("DELETE FROM visitors WHERE id = ?");
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $stmt->close();
-    } elseif ($id && isset($_POST['edit'])) {
-        $stmt = $conn->prepare("SELECT visitors.*, visit_reasons.reason_description FROM visitors LEFT JOIN visit_reasons ON visitors.visit_reason_id = visit_reasons.reason_id WHERE visitors.id = ?");
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $editRecord = $stmt->get_result()->fetch_assoc();
-        $stmt->close();
-    } elseif ($id && isset($_POST['save'])) {
-        // Validate the "Reason for Visit" field
-        if (empty($_POST['visit_reason_id']) || $_POST['visit_reason_id'] === "Select a reason") {
-            $errorMessage = "Please select a reason for the visit.";
-            // Redirect back to the edit form with an error message
-            header("Location: edit.php?id=$id&error=" . urlencode($errorMessage));
-            exit;
+// Handle Edit Person
+if (isset($_POST['edit_person'])) {
+    $editPersonMode = true;
+    $editPersonId = $_POST['person_id'];
+    $stmt = $conn->prepare("SELECT person_name FROM visiting_persons WHERE person_id = ?");
+    $stmt->bind_param("i", $editPersonId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $editPersonRow = $result->fetch_assoc();
+    }
+    $stmt->close();
+}
+
+// Handle Update Person
+if (isset($_POST['update_person'])) {
+    $personIdToUpdate = $_POST['person_id'];
+    $updatedName = $conn->real_escape_string($_POST['updated_person_name']);
+    $stmt = $conn->prepare("UPDATE visiting_persons SET person_name = ? WHERE person_id = ?");
+    $stmt->bind_param("si", $updatedName, $personIdToUpdate);
+    if ($stmt->execute()) {
+        $successMessage .= " Person updated successfully.";
+    } else {
+        $errorMessage .= " Error updating person: " . $stmt->error;
+    }
+    $stmt->close();
+    $editPersonMode = false;
+}
+
+// Handle adding new visiting person and new visit reason
+if (isset($_POST['add_new'])) {
+    if (!empty($_POST['new_person_name'])) {
+        $newPersonName = $conn->real_escape_string($_POST['new_person_name']);
+        $stmt = $conn->prepare("INSERT INTO visiting_persons (person_name) VALUES (?)");
+        $stmt->bind_param("s", $newPersonName);
+        if ($stmt->execute()) {
+            $successMessage .= " New person added successfully.";
         } else {
-            // Directly update the visitors table
-            $stmt = $conn->prepare("UPDATE visitors SET first_name = ?, last_name = ?, visit_reason_id = ?, visiting_person_id = ?, checkin_time = ?, checkout_time = ? WHERE id = ?");
-            $stmt->bind_param("ssiissi", $_POST['first_name'], $_POST['last_name'], $_POST['visit_reason_id'], $_POST['visiting_person_id'], $_POST['checkin_time'], $_POST['checkout_time'], $id);
-            $stmt->execute();
-            $stmt->close();
+            $errorMessage .= " Error adding new person: " . $stmt->error;
         }
-    } elseif ($id && isset($_POST['checkin_now'])) {
-        $current_time = date('Y-m-d H:i:s');
-        $stmt = $conn->prepare("UPDATE visitors SET checkin_time = ? WHERE id = ?");
-        $stmt->bind_param("si", $current_time, $id);
-        $stmt->execute();
         $stmt->close();
-    } elseif ($id && isset($_POST['checkout_now'])) {
-        $current_time = date('Y-m-d H:i:s');
-        $stmt = $conn->prepare("UPDATE visitors SET checkout_time = ? WHERE id = ?");
-        $stmt->bind_param("si", $current_time, $id);
-        $stmt->execute();
+    }
+
+    if (!empty($_POST['new_reason_description'])) {
+        $newReasonDescription = $conn->real_escape_string($_POST['new_reason_description']);
+        $stmt = $conn->prepare("INSERT INTO visit_reasons (reason_description) VALUES (?)");
+        $stmt->bind_param("s", $newReasonDescription);
+        if ($stmt->execute()) {
+            $successMessage .= " New reason added successfully.";
+        } else {
+            $errorMessage .= " Error adding new reason: " . $stmt->error;
+        }
         $stmt->close();
     }
 }
 
-// Fetch pre-defined reasons from the database
-$reasonsSql = "SELECT * FROM visit_reasons";
-$reasonsResult = $conn->query($reasonsSql);
+// Fetching existing visiting persons and reasons for visit
+$visitingPersonsQuery = "SELECT * FROM visiting_persons";
+$visitingPersonsResult = $conn->query($visitingPersonsQuery);
 
-// Fetch pre-defined persons from the database
-$personsSql = "SELECT * FROM visiting_persons";
-$personsResult = $conn->query($personsSql);
+$visitReasonsQuery = "SELECT * FROM visit_reasons";
+$visitReasonsResult = $conn->query($visitReasonsQuery);
 
-// Fetch records after processing POST requests
-$records = fetchRecords($conn, $search);
-
+// Close the database connection
 $conn->close();
+
 ?>
 
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Visitor Records</title>
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <title>Visitor Management System</title>
+<link rel="stylesheet" type="text/css" href="theme.php">    <style>
+        /* Center-align the edit tables */
+        table.edit-table {
+            width: 40%;
+            margin: 0 auto;
+        }
+
+        /* Adjust table styles for existing visiting persons and visit reasons */
+        table.existing-table {
+            width: 50%; /* Set both tables to be 50% of the page */
+            border-collapse: collapse;
+            margin: 0 auto; /* Center-align the tables */
+        }
+
+        table.existing-table th,
+        table.existing-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+
+        /* Ensure uniform width for action buttons */
+        table.existing-table .actions {
+            width: 150px;
+        }
+    </style>
 </head>
 <body>
+    <h1>Visitor Management System</h1>
     <img src="../img/dnd-project-sm-logo.png">
     <h2><a href="/admin/" class="button">Return to Admin Dashboard</a></h2>
-    <h2>Edit Visitor Records</h2>
-    <!-- Search Form -->
-    <form method="GET">
-        <input type="text" name="search" placeholder="Search by Name" value="<?= htmlspecialchars($search) ?>">
-        <input type="submit" value="Search">
-    </form>
-    <?php if (isset($editRecord)): ?>
-        <div class="edit-form">
-            <h3>Edit Record</h3>
-            <form method="post">
-                <table style="width: 60%; margin: 0 auto;">
-                    <tr>
-                        <td>First Name:</td>
-                        <td><input type="text" name="first_name" value="<?= htmlspecialchars($editRecord['first_name']) ?>"></td>
-                    </tr>
-                    <tr>
-                        <td>Last Name:</td>
-                        <td><input type="text" name="last_name" value="<?= htmlspecialchars($editRecord['last_name']) ?>"></td>
-                    </tr>
-<tr>
-    <td>Person Visited:</td>
-    <td>
-        <select name="visiting_person_id">
-            <option value="Select a person">Select a person</option>
-            <?php foreach ($personsResult as $personRow): ?>
-                <option value="<?= htmlspecialchars($personRow['person_id']) ?>" <?= (isset($editRecord) && $editRecord['visiting_person_id'] == $personRow['person_id']) ? 'selected' : '' ?>>
-                    <?= htmlspecialchars($personRow['person_name']) ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-    </td>
-</tr>
-                    <tr>
-                        <td>Reason for Visit:</td>
-                        <td>
-                            <select name="visit_reason_id">
-                                <option value="Select a reason">Select a reason</option>
-                                <?php foreach ($reasonsResult as $reasonRow): ?>
-                                    <option value="<?= htmlspecialchars($reasonRow['reason_id']) ?>" <?= ($editRecord['visit_reason_id'] == $reasonRow['reason_id']) ? 'selected' : '' ?>>
-                                        <?= htmlspecialchars($reasonRow['reason_description']) ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Check-In Time:</td>
-                        <td><input type="text" name="checkin_time" value="<?= htmlspecialchars($editRecord['checkin_time']) ?>"></td>
-                    </tr>
-                    <tr>
-                        <td>Check-Out Time:</td>
-                        <td><input type="text" name="checkout_time" value="<?= htmlspecialchars($editRecord['checkout_time']) ?>"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="text-align: center;">
-                            <input type="hidden" name="id" value="<?= htmlspecialchars($editRecord['id']) ?>">
-                            <input type="submit" name="save" value="Save Changes">
-                            <input type="submit" name="checkin_now" value="Check-In Now">
-                            <input type="submit" name="checkout_now" value="Check-Out Now">
-                        </td>
-                    </tr>
-                </table>
-            </form>
-        </div>
-    <?php endif; ?>
-    
-<!-- START Table to display records -->
 
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Person Visited</th> <!-- Add this column -->
-            <th>Reason for Visit</th>
-            <th>Check-In Time</th>
-            <th>Check-Out Time</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($records as $record): ?>
+    <!-- Edit existing reason -->
+    <?php if ($editReasonMode) : ?>
+        <h2><b>Edit Reason</b></h2>
+        <table class="centered-table edit-table">
             <tr>
-                <td><?= htmlspecialchars($record['id']) ?></td>
-                <td><?= htmlspecialchars($record['first_name']) . ' ' . htmlspecialchars($record['last_name']) ?></td>
+                <th>Edit Reason</th>
+            </tr>
+            <tr>
                 <td>
-                    <?php
-                    // Loop through the persons visited data and find the matching person
-                    $visitedPerson = '';
-                    foreach ($personsResult as $personRow) {
-                        if ($record['visiting_person_id'] == $personRow['person_id']) {
-                            $visitedPerson = htmlspecialchars($personRow['person_name']);
-                            break;
-                        }
-                    }
-                    echo $visitedPerson;
-                    ?>
-                </td>
-                <td><?= isset($record['reason_description']) ? htmlspecialchars($record['reason_description']) : 'N/A' ?></td>
-                <td><?= htmlspecialchars($record['checkin_time']) ?></td>
-                <td><?= htmlspecialchars($record['checkout_time']) ?></td>
-                <td>
-                    <form method="post">
-                        <input type="hidden" name="id" value="<?= htmlspecialchars($record['id']) ?>">
-                        <button type="submit" name="edit">Edit</button>
-                        <button type="submit" name="delete" class="delete-button">Delete</button>
+                    <form method="POST">
+                        <input type="hidden" name="reason_id" value="<?php echo $editReasonId; ?>">
+                        <label for="updated_reason_description">Updated Description:</label>
+                        <input type="text" name="updated_reason_description" value="<?php echo $editReasonRow['reason_description']; ?>" required>
+                        <button type="submit" name="update_reason">Update</button>
                     </form>
                 </td>
             </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
+        </table>
+    <?php endif; ?>
 
+    <!-- Edit existing person -->
+    <?php if ($editPersonMode) : ?>
+        <h2><b>Edit Person</b></h2>
+        <table class="centered-table edit-table">
+            <tr>
+                <th>Edit Person</th>
+            </tr>
+            <tr>
+                <td>
+                    <form method="POST">
+                        <input type="hidden" name="person_id" value="<?php echo $editPersonId; ?>">
+                        <label for="updated_person_name">Updated Name:</label>
+                        <input type="text" name="updated_person_name" value="<?php echo $editPersonRow['person_name']; ?>" required>
+                        <button type="submit" name="update_person">Update</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    <?php endif; ?>
 
-<!-- END Table to display records -->
+    <!-- Display success and error messages -->
+    <?php if (!empty($successMessage)) : ?>
+        <p style="color: green;"><?php echo $successMessage; ?></p>
+    <?php endif; ?>
+    <?php if (!empty($errorMessage)) : ?>
+        <p style="color: red;"><?php echo $errorMessage; ?></p>
+    <?php endif; ?>
 
+    <!-- Add new visitor and reason form -->
+    <h2><b>Add New Visiting Person or Reason for Visit</b></h2>
+    <form method="POST">
+        <input type="text" name="new_person_name" placeholder="Enter new person name">
+        <input type="text" name="new_reason_description" placeholder="Enter new reason for visit">
+        <input type="submit" name="add_new" value="Add New">
+    </form>
+
+    <!-- List of existing visiting persons -->
+    <h2>Existing Visiting Persons</h2>
+    <table class="existing-table">
+        <tr>
+            <th>Name</th>
+            <th class="actions">Actions</th>
+        </tr>
+        <?php while ($row = $visitingPersonsResult->fetch_assoc()) : ?>
+            <tr>
+                <td><?php echo $row['person_name']; ?></td>
+                <td class="actions">
+                    <form method="POST">
+                        <input type="hidden" name="person_id" value="<?php echo $row['person_id']; ?>">
+                        <button type="submit" name="edit_person">Edit</button>
+                        <button type="submit" name="delete_person" class="delete-button">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        <?php endwhile; ?>
+    </table>
+
+    <!-- List of existing visit reasons -->
+    <h2>Existing Visit Reasons</h2>
+    <table class="existing-table">
+        <tr>
+            <th>Description</th>
+            <th class="actions">Actions</th>
+        </tr>
+        <?php while ($row = $visitReasonsResult->fetch_assoc()) : ?>
+            <tr>
+                <td><?php echo $row['reason_description']; ?></td>
+                <td class="actions">
+                    <form method="POST">
+                        <input type="hidden" name="reason_id" value="<?php echo $row['reason_id']; ?>">
+                        <button type="submit" name="edit_reason">Edit</button>
+                        <button type="submit" name="delete_reason" class="delete-button">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        <?php endwhile; ?>
+    </table>
 </body>
 </html>
-
