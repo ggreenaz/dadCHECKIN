@@ -1,16 +1,16 @@
 <?php
 session_start(); // Start the session
+
 // Check if the form has been submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['theme'])) {
     // Get the selected theme from the form
     $selectedTheme = $_POST['theme'];
 
     // Validate the selected theme (ensure it exists to prevent vulnerabilities)
-    $allowedThemes = ['style.css', 'darkmode.style.css', 'lightmode.style.css', 'ltgreen.style.css', 'academi.style.css', 'gator.style.css','packers.style.css']; 
+    $allowedThemes = ['style1', 'darkmode', 'lightmode', 'ltgreen', 'academi', 'gator', 'packers'];
 
-// List of allowed themes
     if (in_array($selectedTheme, $allowedThemes)) {
-        // Set a session variable to remember the chosen theme
+        // Set a session variable with the same key as in JavaScript
         $_SESSION['selected_theme'] = $selectedTheme;
     }
 }
@@ -21,33 +21,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['theme'])) {
 <head>
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
-<link rel="stylesheet" type="text/css" href="theme.php">    <?php
-    // Load the selected theme CSS dynamically
-    if (isset($_SESSION['selected_theme'])) {
-        $selectedTheme = $_SESSION['selected_theme'];
-        
-	echo '<link rel="stylesheet" type="text/css" href="css/' . $selectedTheme . '.css">';
+    <link rel="stylesheet" type="text/css" href="theme.php">
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const themeSelect = document.getElementById("theme-select");
+        const storedTheme = localStorage.getItem("selected_theme");
 
-    } else {
-        // Fallback to a default theme if no theme is selected
-        echo '<link rel="stylesheet" type="text/css" href="css/style.css">';
-    }
-    ?>
-   <script>
-        // JavaScript to pre-select the theme based on stored value
-        document.addEventListener("DOMContentLoaded", function () {
-            const themeSelect = document.getElementById("theme-select");
-            const storedTheme = localStorage.getItem("selected_theme");
+        // Set the dropdown to the stored theme
+        if (storedTheme) {
+            themeSelect.value = storedTheme;
+        }
 
-            if (storedTheme) {
-                themeSelect.value = storedTheme;
-            }
-
-            themeSelect.addEventListener("change", function () {
-                localStorage.setItem("selected_theme", this.value);
-            });
+        themeSelect.addEventListener("change", function () {
+            const selectedTheme = this.value;
+            localStorage.setItem("selected_theme", selectedTheme);
+            document.getElementById("theme-link").href = `../css/${selectedTheme}.css`;
         });
-    </script>
+    });
+</script>
 
 </head>
 <body>
@@ -65,13 +56,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['theme'])) {
     <form method="post" action="">
         <label for="theme-select">Select a theme:</label>
         <select id="theme-select" name="theme">
-            <option value="style.css">Default</option>
-            <option value="darkmode.style.css">Dark Mode</option>
-            <option value="lightmode.style.css">Light Mode</option>
-            <option value="ltgreen.style.css">Light Green Mode</option>
-            <option value="academi.style.css">Academi Mode</option>
-            <option value="gator.style.css">Gator Mode</option>
-            <option value="packers.style.css">Green Bay Mode</option>
+            <option value="style1">Default</option>
+            <option value="darkmode">Dark Mode</option>
+            <option value="lightmode">Light Mode</option>
+            <option value="ltgreen">Light Green Mode</option>
+            <option value="academi">Academi Mode</option>
+            <option value="gator">Gator Mode</option>
+            <option value="packers">Green Bay Mode</option>
             <!-- Add more options for additional themes -->
         </select>
         <input type="submit" value="Apply Theme">
