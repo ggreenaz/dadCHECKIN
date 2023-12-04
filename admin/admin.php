@@ -184,8 +184,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visitor Management System</title>
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <style>
+<link rel="stylesheet" type="text/css" href="theme.php">    <style>
         /* Center-align the edit tables */
         table.edit-table {
             width: 40%;
@@ -316,4 +315,3 @@ $conn->close();
     </table>
 </body>
 </html>
-
