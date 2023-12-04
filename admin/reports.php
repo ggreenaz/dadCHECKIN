@@ -90,8 +90,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <title>Visitor Reports</title>
-<link rel="stylesheet" type="text/css" href="theme.php">
-</head>
+<link rel="stylesheet" type="text/css" href="theme.php"></head>
 <body>
     <img src="../img/dnd-project-sm-logo.png">
 
@@ -157,4 +156,3 @@ $conn->close();
     <?php endif; ?>
 </body>
 </html>
-
