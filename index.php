@@ -94,7 +94,7 @@ $conn->close();
 <html lang="en">
 <head>
     <title>Visitor Check-In and Check-Out</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="admin/theme.php">
     <meta charset="UTF-8">
 </head>
 <body>
