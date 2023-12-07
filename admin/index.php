@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['theme'])) {
     $selectedTheme = $_POST['theme'];
 
     // Validate the selected theme (ensure it exists to prevent vulnerabilities)
-    $allowedThemes = ['style1', 'darkmode', 'lightmode', 'ltgreen', 'academi', 'gator', 'packers'];
+    $allowedThemes = ['style1', 'darkmode', 'lightmode', 'ltgreen', 'academi', 'gator', 'packers', 'trc'];
 
     if (in_array($selectedTheme, $allowedThemes)) {
         // Set a session variable with the same key as in JavaScript
@@ -51,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['theme'])) {
         <a href="reports.php">Print Records</a>
         <a href="edit.php">Edit Records</a>
         <a href="admin.php">Add or Edit Person/Reason</a>
+        <a href="history.php">Visitor History Data</a>
     </div>
 
     <form method="post" action="">
@@ -63,6 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['theme'])) {
             <option value="academi">Academi Mode</option>
             <option value="gator">Gator Mode</option>
             <option value="packers">Green Bay Mode</option>
+            <option value="trc">TRC Mode</option>
             <!-- Add more options for additional themes -->
         </select>
         <input type="submit" value="Apply Theme">
