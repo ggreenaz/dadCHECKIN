@@ -1,79 +1,14 @@
-/* Light Mode */
 body {
     font-family: Arial, sans-serif;
-    background-color: #ecf0f1; /* Light gray background */
+    background-color: #f0f0f0; /* Light grey */
     padding: 20px;
     text-align: center;
-    color: #2c3e50; /* Dark text color */
-}
-
-.edit-form table {
-    margin: auto;
-    background-color: #f5f5f5; /* Light gray background */
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.edit-form td {
-    padding: 5px;
-}
-
-.edit-form input[type="text"], .edit-form input[type="submit"] {
-    padding: 5px;
-    border-radius: 3px;
-    border: 1px solid #ddd;
-}
-
-.edit-form input[type="submit"] {
-    background-color: #3498db; /* Blue submit button */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.edit-form input[type="submit"]:hover {
-    background-color: #2980b9; /* Darker blue on hover */
-}
-
-table {
-    margin-top: 20px;
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
-    background-color: #f5f5f5; /* Light gray background */
-}
-
-th {
-    background-color: #ecf0f1; /* Light gray background for table headers */
-}
-
-form button {
-    background-color: #3498db; /* Blue button */
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    margin: 2px;
-    border-radius: 3px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-form button:hover {
-    background-color: #2980b9; /* Darker blue on hover */
+    color: #333333; /* Dark grey text */
 }
 
 .button, a {
     display: inline-block;
-    background-color: #3498db; /* Blue button */
+    background-color: #007bff; /* Light blue */
     padding: 10px 20px;
     margin: 10px;
     border-radius: 5px;
@@ -83,46 +18,106 @@ form button:hover {
 }
 
 .button:hover, a:hover {
-    background-color: #2980b9; /* Darker blue on hover */
+    background-color: #0056b3; /* Darker blue for hover */
 }
 
-/* Red delete button styling */
-.delete-button {
-    background-color: red;
-    color: white;
-    border: none;
+table {
+    margin-top: 20px;
+    width: 60%;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #cccccc; /* Light border */
+    text-align: left;
+    background-color: #ffffff; /* White for cells */
+}
+
+th {
+    background-color: #e9ecef; /* Very light grey for header */
+}
+
+td {
+    background-color: #f0f0f0; /* Light grey to match body */
+}
+
+.form-row {
+    margin-bottom: 15px;
+}
+
+input[type="submit"], input[type="text"], select {
     padding: 5px 10px;
+    margin-right: 10px;
+    border-radius: 3px;
+    border: 1px solid #cccccc; /* Light grey border */
+    background-color: #ffffff; /* White background */
+    color: #333333; /* Dark grey text */
+}
+
+input[type="submit"] {
+    background-color: #007bff; /* Light blue */
+    border: none;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-.delete-button:hover {
+input[type="submit"]:hover {
+    background-color: #0056b3; /* Darker blue for hover */
+}
+
+.delete-button {
+    background-color: #dc3545; /* Bright red */
+}
+
+.edit-button {
+    background-color: #28a745; /* Green */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.edit-button:hover {
+    background-color: #218838; /* Darker green for hover */
+}
+
+.print-button:hover {
     background-color: darkred;
 }
-
-.red-button {
-    background-color: red; /* Red background */
-    color: white;         /* White text */
-    border: none;         /* No border */
-    padding: 10px 20px;   /* Padding around the text */
-    border-radius: 5px;   /* Rounded corners */
-    cursor: pointer;      /* Cursor changes to pointer on hover */
-    /* Add any other styles you need */
+.chart-container {
+    width: 400px; /* Set your desired width */
+    height: 300px; /* Set your desired height */
+    margin: auto; /* Center the chart if desired */
+}
+#reason-for-visit-container {
+    width: 500px;
+    height: 400px;
 }
 
-/* Style for tables */
-.centered-table {
-    width: 100%; /* Set the table width */
-    table-layout: fixed; /* Fixed table layout for consistent column widths */
-    margin: auto; /* Center align the table */
+#person-being-visited-container {
+    width: 300px;
+    height: 250px;
+}
+/* ...and so on for other charts... */
+/* Existing styles... */
+
+/* Styles for Chart Containers */
+.chart-container {
+    width: 600px; /* Adjust the width as needed */
+    height: 400px; /* Adjust the height as needed */
+    margin: auto; /* Center the chart on the page */
+    margin-top: 20px; /* Space above the chart container */
 }
 
-/* Style for table headers */
-.centered-table th {
-    width: 50%; /* Adjust the width as needed */
+canvas {
+    width: 100% !important;
+    height: 100% !important;
 }
 
-/* Style for table data cells */
-.centered-table td {
-    width: 50%; /* Adjust the width as needed */
-}
+/* You might want to add additional styling specific to your charts here */
+
