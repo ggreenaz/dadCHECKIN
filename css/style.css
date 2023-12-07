@@ -125,4 +125,19 @@ form button:hover {
 .centered-table td {
     width: 50%; /* Adjust the width as needed */
 }
+/* Existing styles... */
 
+/* Styles for Chart Containers */
+.chart-container {
+    width: 600px; /* Adjust the width as needed */
+    height: 400px; /* Adjust the height as needed */
+    margin: auto; /* Center the chart on the page */
+    margin-top: 20px; /* Space above the chart container */
+}
+
+canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* You might want to add additional styling specific to your charts here */
