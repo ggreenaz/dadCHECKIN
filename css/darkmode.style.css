@@ -85,3 +85,38 @@ input[type="submit"]:hover {
 .edit-button:hover {
     background-color: #5e35b1; /* Slightly lighter purple for hover */
 }
+
+.print-button:hover {
+    background-color: darkred;
+}
+.chart-container {
+    width: 400px; /* Set your desired width */
+    height: 300px; /* Set your desired height */
+    margin: auto; /* Center the chart if desired */
+}
+#reason-for-visit-container {
+    width: 500px;
+    height: 400px;
+}
+
+#person-being-visited-container {
+    width: 300px;
+    height: 250px;
+}
+/* ...and so on for other charts... */
+/* Existing styles... */
+
+/* Styles for Chart Containers */
+.chart-container {
+    width: 600px; /* Adjust the width as needed */
+    height: 400px; /* Adjust the height as needed */
+    margin: auto; /* Center the chart on the page */
+    margin-top: 20px; /* Space above the chart container */
+}
+
+canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* You might want to add additional styling specific to your charts here */
