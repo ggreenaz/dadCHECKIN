@@ -146,7 +146,7 @@ $conn->close();
                         <td><?= htmlspecialchars($record['first_name']) . ' ' . htmlspecialchars($record['last_name']) ?></td>
                         <td><?= htmlspecialchars($record['reason_description']) ?></td>
                         <td><?= htmlspecialchars($record['checkin_time']) ?></td>
-                        <td><?= htmlspecialchars($record['checkout_time']) ?></td>
+                        <td><?= htmlspecialchars($record['checkout_time'] ?? '') ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
