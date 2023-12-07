@@ -207,7 +207,7 @@ $conn->close();
                 </td>
                 <td><?= isset($record['reason_description']) ? htmlspecialchars($record['reason_description']) : 'N/A' ?></td>
                 <td><?= htmlspecialchars($record['checkin_time']) ?></td>
-                <td><?= htmlspecialchars($record['checkout_time']) ?></td>
+                <td><?= htmlspecialchars($record['checkout_time'] ?? '') ?></td>
                 <td>
                     <form method="post">
                         <input type="hidden" name="id" value="<?= htmlspecialchars($record['id']) ?>">
