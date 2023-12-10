@@ -95,7 +95,7 @@ $conn->close();
     <img src="../img/dnd-project-sm-logo.png">
 
     <h1>Visitor Reports</h1>
-    <h2><a href="/admin/" class="button">Return to Admin Dashboard</a></h2>
+    <h2><a href="./" class="button">Return to Admin Dashboard</a></h2>
 
     <form method="POST">
         <input type="submit" name="report_today" value="Get Reports for Today" class="button">
