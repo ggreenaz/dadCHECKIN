@@ -106,7 +106,7 @@ $conn->close();
     <title>Edit Visitor Records</title>
 <link rel="stylesheet" type="text/css" href="theme.php"><body>
     <img src="../img/dnd-project-sm-logo.png">
-    <h2><a href="/admin/" class="button">Return to Admin Dashboard</a></h2>
+    <h2><a href="./" class="button">Return to Admin Dashboard</a></h2>
     <h2>Edit Visitor Records</h2>
     <!-- Search Form -->
     <form method="GET">
