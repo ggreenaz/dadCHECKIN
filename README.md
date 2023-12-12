@@ -103,7 +103,7 @@ Create the .htaccess file:
 
 Enter the following code into the file:
 
-    apache
+
     AuthType Basic
     AuthName "Restricted Access"
     AuthUserFile /etc/apache2/.htpasswd
@@ -119,7 +119,7 @@ Step 2: Create the .htpasswd File (You'll need to create a .htpasswd file to sto
 
 Create the .htpasswd file and add a user (replace username with your desired username):
 
-    sudo htpasswd -c /etc/apache2/.htpasswd username
+    sudo htpasswd -c /etc/apache2/.htpasswd your_username
 
 You'll be prompted to enter and confirm the password.
 
@@ -131,10 +131,22 @@ Ensure that your Apache configuration allows .htaccess overrides. Edit your Apac
 
 Inside the section --> <Directory /var/www/html> section, add or modify the line:
 
-    apache
-    AllowOverride All
+    <VirtualHost *:80>
+        <Directory /var/www/html>
+            AllowOverride All
+        </Directory>
+        ServerName dad.garlandgreen.com (example)
+        ServerAdmin dad@garlandgreen.com (example)
+        DocumentRoot /var/www/html
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+    </VirtualHost>
+
 
 Save and exit the editor.
+I suggest you check your configuration file to make sure there are no syntax errors by running:
+
+    sudo apache2ctl configtest
 
 Step 4: Restart Apache:
 
